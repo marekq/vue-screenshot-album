@@ -16,6 +16,6 @@ frontend:
         - yarn build
 
   artifacts:
-    baseDirectory: public
+    baseDirectory: dist
     files:
       - '**/*'

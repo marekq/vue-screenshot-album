@@ -1,5 +1,14 @@
 <template>
-  <amplify-s3-album />
+  <div>
+    <div v-if="authState !== 'signedin'">Sign in to see all albums</div>
+    <amplify-authenticator>
+      <div v-if="authState === 'signedin' && user">
+        <div>Hello, {{user.username}}</div>
+          <amplify-s3-album />
+      </div>
+      <amplify-sign-out></amplify-sign-out>
+    </amplify-authenticator>
+  </div>
 </template>
 
 <script>
