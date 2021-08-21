@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-screenalbum-dev-173529-authRole",
+      "UnauthRoleArn": "arn:aws:iam::517266833056:role/amplify-screenalbum-dev-173529-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::517266833056:role/amplify-screenalbum-dev-173529-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-screenalbum-dev-173529-deployment",
+      "UnauthRoleName": "amplify-screenalbum-dev-173529-unauthRole",
+      "StackName": "amplify-screenalbum-dev-173529",
+      "StackId": "arn:aws:cloudformation:eu-west-1:517266833056:stack/amplify-screenalbum-dev-173529/6bcaacb0-0295-11ec-9d6c-0a3b9bf92c97",
+      "AmplifyAppId": "da2ln64n0y7v7"
+    },
+    "categories": {
+      "auth": {
+        "screenalbum71f13e23": {}
+      },
+      "function": {
+        "AdminQueries599e86cd": {
+          "deploymentBucketName": "amplify-screenalbum-dev-173529-deployment",
+          "s3Key": "amplify-builds/AdminQueries599e86cd-533747584f4b4c6f4d6c-build.zip"
+        }
+      }
+    }
+  }
+}
