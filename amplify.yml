@@ -1,0 +1,21 @@
+version: 0.1
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yarn install
+
+    build:
+      commands:
+        - yarn build
+
+  artifacts:
+    baseDirectory: public
+    files:
+      - '**/*'
