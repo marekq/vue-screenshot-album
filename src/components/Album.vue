@@ -1,6 +1,7 @@
 <template>
   <div>
-    Private album for user {{this.data.authuser}}
+    Welcome to your private album, {{this.data.authuser}}
+    <br /><br />
     <amplify-s3-album 
       picker = "true"
       level = "private"

@@ -37,7 +37,7 @@ export default {
       const { payload } = data
       if (payload.event === 'signIn') {
         this.signedIn = true
-        this.$router.push('/admin')
+        this.$router.push('/album')
       }
       if (payload.event === 'signOut') {
         this.$router.push('/')
@@ -62,8 +62,6 @@ table, th, td {
   font-size: 18px;
   text-align: center;
   margin: 1em 3em 3em 3em;
-  width: 300px;
-  border-radius: 5px;
 }
 
 div {
