@@ -4,14 +4,14 @@
       <router-link tag = "div" to = "/">
         <a>Home</a> 
       </router-link>
-      <router-link tag = "div" to = "/public/">
-        <a>Public</a> 
+      <router-link tag = "p" to = "/public/">
+        <a>Public albums</a>
       </router-link>
       <router-link tag = "p" to = "/auth/" v-if = "!signedIn">
         <a>Login</a>
       </router-link>
-      <router-link tag = "p" to = "/admin/" v-if = "signedIn">
-        <a>Admin</a>
+      <router-link tag = "p" to = "/album/" v-if = "signedIn">
+        <a>My albums</a>
       </router-link>
     </div>
     <router-view />
@@ -61,9 +61,13 @@ table, th, td {
 .navbar {
   font-size: 18px;
   text-align: center;
-  margin: 1em 1em 3em 1em;
-  width: 80%;
+  margin: 1em 3em 3em 3em;
+  width: 300px;
   border-radius: 5px;
+}
+
+div {
+  text-align: center;
 }
 
 .sign-out {

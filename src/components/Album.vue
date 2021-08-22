@@ -1,61 +1,31 @@
 <template>
   <div>
-    <div v-if="authState !== 'signedin'">
-      Sign in to see all albums
-    </div>
-    <div v-if="authState === 'signedin' && user">
-      <div>
-        Hello, {{user.username}}
-        <amplify-s3-album />
-      </div>
-    </div>
-    <amplify-authenticator username-alias = "username" />        
-    <div width = "120px">
-      <amplify-sign-out v-if="authState === 'signedin'"/>
-    </div>
+    Private album for user {{this.data.authuser}}
+    <amplify-s3-album 
+      picker = "true"
+      level = "private"
+    />
   </div>
 </template>
 
 <script>
+import { Auth } from 'aws-amplify';
+
 export default {
   name: 'Album',
-  data() {
+  data () {
     return {
-      registerFields: [
-        {
-          type: "username",
-          placeholder: " ",
-          label: "Username",
-          required: true
-        },
-        {
-          type: "email",
-          placeholder: " ",
-          label: "E-mail",
-          required: true
-        },
-        {
-          type: "password",
-          placeholder: " ",
-          label: "Password",
-          required: true
-        }
-      ],
-      loginFields: [
-        {
-          type: "username",
-          placeholder: " ",
-          label: "Username",
-          required: true
-        },
-        {
-          type: "password",
-          placeholder: " ",
-          label: "Password",
-          required: true
-        }
-      ]
+      data: {
+        authuser: ''
+      }
     }
+  },
+  async beforeCreate() {
+
+      // get the cognito user name 
+      const authuser = await Auth.currentAuthenticatedUser();
+      this.data.authuser = authuser.username;
+      console.log(authuser.username)
   }
 }
 </script>

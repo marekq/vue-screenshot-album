@@ -1,9 +1,6 @@
 <template>
     <div class = "container" v-bind:style = '{textAlign: "center"}'>
-        <h1>Home</h1>
-        <div class = "main">
-            Welcome to the screenshow viewer.
-        </div>
+        Sign in to see all albums or take a look at the public album. 
     </div>
 </template>
 
