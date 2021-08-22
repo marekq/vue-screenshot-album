@@ -1,11 +1,8 @@
 <template>
   <div class = 'app'>
-    <div width = "100%" class = 'navbar'>
+    <div v-bind:style = '{textAlign: "center"}' class = 'navbar'>
       <router-link tag = "div" to = "/">
         <a>Home</a> 
-      </router-link>
-      <router-link tag = "p" to = "/public/">
-        <a>Public albums</a>
       </router-link>
       <router-link tag = "p" to = "/auth/" v-if = "!signedIn">
         <a>Login</a>
@@ -18,6 +15,7 @@
     <br /><br />
     <div class = 'sign-out' sticky = "bottom">
       <amplify-sign-out v-if = "signedIn"></amplify-sign-out>
+      <br /><br />
     </div>
   </div>
 </template>
@@ -61,7 +59,8 @@ table, th, td {
 .navbar {
   font-size: 18px;
   text-align: center;
-  margin: 1em 3em 3em 3em;
+  margin: 1em auto;
+  width: 375px;
 }
 
 div {
