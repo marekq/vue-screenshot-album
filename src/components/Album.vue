@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { Auth } from 'aws-amplify';
+import { Auth, Storage } from 'aws-amplify';
 
 export default {
   name: 'Album',
@@ -26,7 +26,11 @@ export default {
       // get the cognito user name 
       const authuser = await Auth.currentAuthenticatedUser();
       this.data.authuser = authuser.username;
-      console.log(authuser.username)
+      console.log(authuser.username);
+
+      Storage.list('private/')
+        .then(result => console.log(result))
+        .catch(err => console.log(err));
   }
 }
 </script>
