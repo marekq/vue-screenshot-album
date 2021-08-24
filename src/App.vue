@@ -1,14 +1,17 @@
 <template>
   <div class = 'app'>
     <div v-bind:style = '{textAlign: "center"}' class = 'navbar'>
-      <router-link tag = "div" to = "/">
-        <a>Home</a> 
+      <router-link tag = "p" to = "/">
+        <a>Home</a>
+      </router-link>
+      <router-link tag = "p" to = "/album/public">
+        <a>Public albums</a>
+      </router-link>
+      <router-link tag = "p" to = "/album/private" v-if = "signedIn">
+        <a>My albums</a>
       </router-link>
       <router-link tag = "p" to = "/auth/" v-if = "!signedIn">
         <a>Login</a>
-      </router-link>
-      <router-link tag = "p" to = "/album/" v-if = "signedIn">
-        <a>My albums</a>
       </router-link>
     </div>
     <router-view />
@@ -30,6 +33,7 @@ export default {
       signedIn: false
     }
   },
+
   beforeCreate() {
     Hub.listen('auth', data => {
       const { payload } = data
@@ -38,16 +42,20 @@ export default {
         this.$router.push('/album')
       }
       if (payload.event === 'signOut') {
-        this.$router.push('/')
         this.signedIn = false
+        this.$router.push('/')
       }
     })
     
     Auth.currentAuthenticatedUser()
       .then(() => {
         this.signedIn = true
+        console.log('signin true')
       })
-      .catch(() => this.signedIn = false)
+      .catch(() => {
+        this.signedIn = false
+        console.log('signin false')
+      })
   }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div id = "app">
+    <h2>viewing {{this.view}} album</h2>
     <masonry-wall :items="imgs" :rtl="true" :column-width="300" :padding="10">
       <template #default="{ item }">
         <div>
@@ -29,24 +30,46 @@ export default {
     VueEasyLightbox
   },
   data () {
+
+    const route =this.$route.fullPath;
+    let view;
+
+    if (route == '/album/public') {
+      view = 'public';
+      console.log('public');
+    } else if (route == '/album/private') {
+      view = 'private';
+      console.log('private');
+    }
     return {
       data: {
         authuser: ''
       },
       imgs: [],
       visible: false,
-      index: 0
+      index: 0,
+      view: view
     }
   },
   async beforeCreate() {
 
+    const route = this.$route.params;
+    console.log(route);
+
     // get the cognito user name 
-    const authuser = await Auth.currentAuthenticatedUser();
-    this.data.authuser = authuser.username;
+    try {
+      const authuser = await Auth.currentAuthenticatedUser();
+      this.data.authuser = authuser.username;
+      console.log('logged in as ' + this.data.authuser);
+
+    } catch (e) {
+      console.log('error login')
+    }
 
     // get the private images stored on S3
     var signedImages = [];
-    const imgList = await Storage.list('', { level: 'private' })
+
+    const imgList = await Storage.list('', { level: this.view })
       .then((result) => { 
         console.log(result);
         return result;
@@ -54,12 +77,13 @@ export default {
       })
       .catch( (err) => { 
         console.log(err);
+        return [];
       })
 
     // get url and image key per object
     for (let i = 0; i < imgList.length; i++) {
       const key = imgList[i].key;
-      const imageUrl = await Storage.get(key, { level: 'private' });
+      const imageUrl = await Storage.get(key, { level: this.view });
       const imageKey = imgList[i].key;
       signedImages[i] = {'src': imageUrl, 'title': imageKey};
     }

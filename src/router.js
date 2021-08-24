@@ -9,8 +9,8 @@ import AuthComponent from './components/Auth.vue';
 // define router rules
 const routes = [
   { path: '/', component: Public },
-  { path: '/public/', component: Public },
-  { path: '/album/', component: Album, requiresAuth: true },
+  { path: '/album/private', component: Album, requiresAuth: true },
+  { path: '/album/public', component: Album },
   { path: '/auth/', component: AuthComponent }
 ]
 

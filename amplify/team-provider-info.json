@@ -13,12 +13,13 @@
     },
     "categories": {
       "auth": {
-        "screenalbum71f13e23": {}
+        "screenalbum71f13e23": {},
+        "userPoolGroups": {}
       },
       "function": {
         "AdminQueries599e86cd": {
           "deploymentBucketName": "amplify-screenalbum-dev-173529-deployment",
-          "s3Key": "amplify-builds/AdminQueries599e86cd-533747584f4b4c6f4d6c-build.zip"
+          "s3Key": "amplify-builds/AdminQueries599e86cd-67464e5045574e7a4739-build.zip"
         }
       }
     }
