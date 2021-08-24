@@ -9,10 +9,11 @@
   },
   "dependencies": {
     "@aws-amplify/ui-components": "^1.7.3",
+    "@yeger/vue-masonry-wall": "^2.2.7",
     "aws-amplify": "^4.2.4",
     "bootstrap": "^5.1.0",
     "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.16.2",
+    "core-js": "^3.16.3",
     "vue": "^3.2.4",
     "vue-easy-lightbox": "^1.2.3",
     "vue-router": "^4.0.10"
@@ -21,7 +22,7 @@
     "@vue/cli-plugin-babel": "~4.5.13",
     "@vue/cli-plugin-eslint": "~4.5.13",
     "@vue/cli-service": "~4.5.13",
-    "@vue/compiler-sfc": "^3.2.4",
+    "@vue/compiler-sfc": "^3.2.6",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^7.16.0"
