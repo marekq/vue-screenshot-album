@@ -2,15 +2,16 @@
   <div id = "app">
     <h2>viewing {{this.view}} album</h2>
     <br />
-    <masonry-wall :items="imgs" :rtl="true" :column-width="300" :padding="5">
+    <masonry-wall :items="imgs" :rtl="true" :column-width="250" :padding="5">
       <template #default="{ item }">
         <div>
-          <h1><img :src = item.src @click="() => showImg(index)"></h1>
-          <span>{{item.title}}</span>
+          <img :src = item.src @click="() => showImg(index)">
         </div>
       </template>
     </masonry-wall>
     <vue-easy-lightbox
+      scrollDisabled
+      moveDisabled
       :visible="visible"
       :index="index"
       :imgs="imgs"
@@ -38,9 +39,11 @@ export default {
     if (route == '/album/public') {
       view = 'public';
       console.log('public');
+
     } else if (route == '/album/private') {
       view = 'private';
       console.log('private');
+
     }
     return {
       data: {
@@ -54,9 +57,6 @@ export default {
   },
   async beforeCreate() {
 
-    const route = this.$route.params;
-    console.log(route);
-
     // get the cognito user name 
     try {
       const authuser = await Auth.currentAuthenticatedUser();
@@ -64,7 +64,8 @@ export default {
       console.log('logged in as ' + this.data.authuser);
 
     } catch (e) {
-      console.log('error login')
+      console.log('error with Auth.currentAuthenticatedUser() login')
+
     }
 
     // get the private images stored on S3
@@ -72,7 +73,6 @@ export default {
 
     const imgList = await Storage.list('', { level: this.view })
       .then((result) => { 
-        console.log(result);
         return result;
         
       })
@@ -81,15 +81,27 @@ export default {
         return [];
       })
 
+    // create signed url index, as the array numbers need to be in a continuos sequence (i.e. 0, 1, 2, 3)
+    var signCounter = 0;
+    
     // get url and image key per object
     for (let i = 0; i < imgList.length; i++) {
-      const key = imgList[i].key;
-      const imageUrl = await Storage.get(key, { level: this.view });
+
+      // get image key, url and size
       const imageKey = imgList[i].key;
-      signedImages[i] = {'src': imageUrl, 'title': imageKey};
+      const imageUrl = await Storage.get(imageKey, { level: this.view });
+      const imageSize = imgList[i].size;
+
+      // if image size is bigger than zero (not empty or a folder), add to array
+      if (imageSize > 0) {
+        signedImages[signCounter] = { 'src': imageUrl, 'title': imageKey };
+
+        // increment sign counter by 1
+        signCounter += 1;
+      }
     }
 
-    // store images to dict
+    // store image array to local state dict
     this.imgs = signedImages;
   },
 
@@ -120,7 +132,6 @@ ul {
 }
 li {
   display: inline-block;
-  margin: 0 10px;
 }
 a {
   color: #42b983;
