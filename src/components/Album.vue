@@ -2,7 +2,7 @@
   <div id = "app">
     <h2>viewing {{this.view}} album</h2>
     <br />
-    <masonry-wall :items="imgs" :rtl="true" :column-width="250" :padding="5">
+    <masonry-wall :items="imgs" :rtl="false" :column-width="250" :padding="5">
       <template #default="{ item }">
         <div>
           <img :title = item.title :src = item.src @click="() => showImg(item.index)">
@@ -45,7 +45,12 @@ export default {
       view = 'private';
       console.log('private');
 
+    } else if (route == '/') {
+      view = 'public';
+      console.log('public');
+
     }
+
     return {
       data: {
         authuser: ''
@@ -56,6 +61,7 @@ export default {
       view: view
     }
   },
+
   async beforeCreate() {
 
     // get the cognito user name 
