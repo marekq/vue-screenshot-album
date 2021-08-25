@@ -5,13 +5,14 @@
     <masonry-wall :items="imgs" :rtl="true" :column-width="250" :padding="5">
       <template #default="{ item }">
         <div>
-          <img :src = item.src @click="() => showImg(index)">
+          <img :title = item.title :src = item.src @click="() => showImg(item.index)">
         </div>
       </template>
     </masonry-wall>
     <vue-easy-lightbox
       scrollDisabled
       moveDisabled
+      loop
       :visible="visible"
       :index="index"
       :imgs="imgs"
@@ -94,7 +95,7 @@ export default {
 
       // if image size is bigger than zero (not empty or a folder), add to array
       if (imageSize > 0) {
-        signedImages[signCounter] = { 'src': imageUrl, 'title': imageKey };
+        signedImages[signCounter] = { 'index': signCounter, 'src': imageUrl, 'title': imageKey };
 
         // increment sign counter by 1
         signCounter += 1;
