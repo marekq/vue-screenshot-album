@@ -14,7 +14,7 @@
         <a>Login</a>
       </router-link>
     </div>
-    <router-view />
+    <router-view :key="$route.fullPath" />
     <br /><br />
     <div class = 'sign-out' sticky = "bottom">
       <amplify-sign-out v-if = "signedIn"></amplify-sign-out>

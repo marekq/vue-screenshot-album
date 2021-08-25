@@ -1,7 +1,8 @@
 <template>
   <div id = "app">
     <h2>viewing {{this.view}} album</h2>
-    <masonry-wall :items="imgs" :rtl="true" :column-width="300" :padding="10">
+    <br />
+    <masonry-wall :items="imgs" :rtl="true" :column-width="300" :padding="5">
       <template #default="{ item }">
         <div>
           <h1><img :src = item.src @click="() => showImg(index)"></h1>
