@@ -3,12 +3,11 @@ import { createWebHistory, createRouter } from "vue-router";
 import { Auth } from 'aws-amplify';
 
 import Album from './components/Album';
-import Public from './components/Public';
 import AuthComponent from './components/Auth.vue';
 
 // define router rules
 const routes = [
-  { path: '/', component: Public },
+  { path: '/', component: Album },
   { path: '/album/private', component: Album, requiresAuth: true },
   { path: '/album/public', component: Album },
   { path: '/auth/', component: AuthComponent }
