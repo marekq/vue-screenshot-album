@@ -93,8 +93,17 @@ export default {
     var signCounter = 0;
     var imgList = this.shuffleList(imgListResp);
 
+    let listlen;
+    if (imgList.length > 25) {
+      listlen = 25;
+
+    } else {
+      listlen = imgList.length;
+
+    }
+
     // get url and image key per object
-    for (let i = 0; i < imgList.length; i++) {
+    for (let i = 0; i < listlen; i++) {
 
       // get image key, url and size
       const imageKey = imgList[i].key;
