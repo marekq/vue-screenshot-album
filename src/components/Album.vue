@@ -1,6 +1,7 @@
 <template>
   <div id = "app">
     <h2>viewing {{this.view}} album</h2>
+    <v-btn x-small block @click = "reloadPage" v-if = "privatePath">reload page<br /></v-btn>
     <br />
     <masonry-wall :items="imgs" :rtl="false" :column-width="250" :padding="5">
       <template #default="{ item }">
@@ -58,20 +59,34 @@ export default {
       imgs: [],
       visible: false,
       index: 0,
-      view: view
+      view: view,
+      privatePath: false
     }
   },
 
+  // before page renders
   async beforeCreate() {
 
     // get the cognito user name 
     try {
+
       const authuser = await Auth.currentAuthenticatedUser();
       this.data.authuser = authuser.username;
       console.log('logged in as ' + this.data.authuser);
 
     } catch (e) {
       console.log('error with Auth.currentAuthenticatedUser() login')
+
+    }
+
+    const path = this.$route.fullPath;
+    console.log(path);
+
+    if (path == '/album/private') {
+      this.privatePath = true;
+
+    } else {
+      this.privatePath = false;
 
     }
 
@@ -137,6 +152,11 @@ export default {
       this.visible = false
     },
 
+    reloadPage(){
+      console.log('reload')
+      window.location.reload()
+    },
+
     // shuffle the order of the imgList array
     shuffleList(array) {
 
@@ -151,7 +171,7 @@ export default {
       }
 
       return array;
-    },
+    }
   }
 }
 </script>

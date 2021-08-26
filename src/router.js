@@ -4,10 +4,11 @@ import { Auth } from 'aws-amplify';
 
 import Album from './components/Album';
 import AuthComponent from './components/Auth.vue';
+import Public from './components/Public.vue';
 
 // define router rules
 const routes = [
-  { path: '/', component: Album },
+  { path: '/', component: Public },
   { path: '/album/private', component: Album, requiresAuth: true },
   { path: '/album/public', component: Album },
   { path: '/auth/', component: AuthComponent }
