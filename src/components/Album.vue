@@ -32,20 +32,20 @@ export default {
     MasonryWall,
     VueEasyLightbox
   },
+
   data () {
 
-    const route =this.$route.fullPath;
+    // get current page route
+    const route = this.$route.fullPath;
     let view;
 
-    if (route == '/album/public') {
-      view = 'public';
-      console.log('public');
-
-    } else if (route == '/album/private') {
+    // if route is private, set to 'private' view
+    if (route == '/album/private') {
       view = 'private';
       console.log('private');
 
-    } else if (route == '/') {
+    // else, set to 'public' view
+    } else {
       view = 'public';
       console.log('public');
 
@@ -78,7 +78,8 @@ export default {
     // get the private images stored on S3
     var signedImages = [];
 
-    const imgList = await Storage.list('', { level: this.view })
+    // list all images in the S3 prefix
+    const imgListResp = await Storage.list('', { level: this.view })
       .then((result) => { 
         return result;
         
@@ -90,7 +91,8 @@ export default {
 
     // create signed url index, as the array numbers need to be in a continuos sequence (i.e. 0, 1, 2, 3)
     var signCounter = 0;
-    
+    var imgList = this.shuffleList(imgListResp);
+
     // get url and image key per object
     for (let i = 0; i < imgList.length; i++) {
 
@@ -110,6 +112,7 @@ export default {
 
     // store image array to local state dict
     this.imgs = signedImages;
+
   },
 
   methods: {
@@ -123,7 +126,23 @@ export default {
     // hide detail panel method
     handleHide() {
       this.visible = false
-    }
+    },
+
+    // shuffle the order of the imgList array
+    shuffleList(array) {
+
+      var currentIndex = array.length, randomIndex;
+      while (currentIndex != 0) {
+
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex], array[currentIndex]];
+      }
+
+      return array;
+    },
   }
 }
 </script>
