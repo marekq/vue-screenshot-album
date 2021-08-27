@@ -94,7 +94,7 @@ export default {
     var signedImages = [];
 
     // list all images in the S3 prefix
-    const imgListResp = await Storage.list('', { level: this.view })
+    const imgListResp = await Storage.list('', { track: true, level: this.view })
       .then((result) => { 
         return result;
         
@@ -122,7 +122,7 @@ export default {
 
       // get image key, url and size
       const imageKey = imgList[i].key;
-      const imageUrl = await Storage.get(imageKey, { level: this.view });
+      const imageUrl = await Storage.get(imageKey, { level: this.view, track: true });
       const imageSize = imgList[i].size;
 
       // if image size is bigger than zero (not empty or a folder), add to array
