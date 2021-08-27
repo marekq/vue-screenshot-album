@@ -1,0 +1,21 @@
+{
+    "appName": "screenalbum",
+    "roleName": "pinpointLambdaRole39642c6e",
+    "cloudformationPolicyName": "cloudformationPolicy39642c6e",
+    "cloudWatchPolicyName": "cloudWatchPolicy39642c6e",
+    "pinpointPolicyName": "pinpointPolicy39642c6e",
+    "authPolicyName": "pinpoint_amplify_39642c6e",
+    "unauthPolicyName": "pinpoint_amplify_39642c6e",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

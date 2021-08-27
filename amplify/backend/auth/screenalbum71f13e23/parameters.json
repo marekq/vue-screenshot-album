@@ -20,6 +20,7 @@
     "requiredAttributes": [
         "email"
     ],
+    "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
