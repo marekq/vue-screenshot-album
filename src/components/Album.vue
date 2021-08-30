@@ -1,6 +1,7 @@
 <template>
   <div id = "app">
-    <h2>viewing {{this.view}} album</h2>
+    <h2>viewing {{this.title}} album</h2>
+    {{this.albumLinks}}
     <v-btn x-small block @click = "reloadPage" v-if = "privatePath">reload page<br /></v-btn>
     <br />
     <masonry-wall :items="imgs" :rtl="false" :column-width="250" :padding="5">
@@ -60,11 +61,13 @@ export default {
       visible: false,
       index: 0,
       view: view,
-      privatePath: false
+      privatePath: false,
+      title: 'public',
+      albumLinks: []
     }
   },
 
-  // before page renders
+  // run before page renders
   async beforeCreate() {
 
     // get the cognito user name 
@@ -79,6 +82,7 @@ export default {
 
     }
 
+    // set url path, i.e. /album/private/album2
     const path = this.$route.fullPath;
 
     if (path.startsWith('/album/private')) {
@@ -89,8 +93,18 @@ export default {
 
     }
     
+    // set subpath, i.e. album1
     this.subpath = typeof this.$route.params.album !== 'undefined' ?  this.$route.params.album + '/' : '';
     console.log('path ' + path + ', subpath: ' + this.subpath);
+
+    // set album title
+    if (this.subpath == '') {
+      this.title = this.view;
+
+    } else {
+      this.title = this.view + '/' + this.$route.params.album;
+
+    }
 
     // get the private images stored on S3
     var signedImages = [];
@@ -108,8 +122,22 @@ export default {
 
     // create signed url index, as the array numbers need to be in a continuos sequence (i.e. 0, 1, 2, 3)
     var signCounter = 0;
-    var imgList = this.shuffleList(imgListResp);
 
+    // find folder prefixes in image list response
+    for (let i = 0; i < imgListResp.length; i++) {
+      
+      if (imgListResp[i].key.endsWith('/')) {
+        
+        const prefixName = imgListResp[i].key;
+        this.albumLinks.push(prefixName);
+        console.log('pushed ' + prefixName);
+
+      }
+    }
+
+    // shuffle directory results in random order
+    var imgList = this.shuffleList(imgListResp);
+    
     let listlen;
     if (imgList.length > 25) {
       listlen = 25;
