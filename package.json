@@ -13,7 +13,7 @@
     "aws-amplify": "^4.2.5",
     "bootstrap": "^5.1.0",
     "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.16.3",
+    "core-js": "^3.16.4",
     "vue": "^3.2.4",
     "vue-easy-lightbox": "^1.2.3",
     "vue-router": "^4.0.10"

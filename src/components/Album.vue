@@ -80,21 +80,23 @@ export default {
     }
 
     const path = this.$route.fullPath;
-    console.log(path);
 
-    if (path == '/album/private') {
+    if (path.startsWith('/album/private')) {
       this.privatePath = true;
 
     } else {
       this.privatePath = false;
 
     }
+    
+    this.subpath = typeof this.$route.params.album !== 'undefined' ?  this.$route.params.album + '/' : '';
+    console.log('path ' + path + ', subpath: ' + this.subpath);
 
     // get the private images stored on S3
     var signedImages = [];
 
     // list all images in the S3 prefix
-    const imgListResp = await Storage.list('', { track: true, level: this.view })
+    const imgListResp = await Storage.list(this.subpath, { track: true, level: this.view })
       .then((result) => { 
         return result;
         
