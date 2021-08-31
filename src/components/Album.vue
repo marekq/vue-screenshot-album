@@ -40,22 +40,6 @@ export default {
 
   data () {
 
-    // get current page route
-    const route = this.$route.fullPath;
-    let view;
-
-    // if route is private, set to 'private' view
-    if (route == '/album/private') {
-      view = 'private';
-      console.log('private');
-
-    // else, set to 'public' view
-    } else {
-      view = 'public';
-      console.log('public');
-
-    }
-
     return {
       data: {
         authuser: ''
@@ -63,10 +47,10 @@ export default {
       imgs: [],
       visible: false,
       index: 0,
-      view: view,
+      view: 'public',
       privatePath: false,
       title: 'public',
-      albumLinks: [{ "prefix": "home", "url": "/album/" + view }],
+      albumLinks: [],
       basePath: ''
     }
   },
@@ -93,10 +77,12 @@ export default {
     if (path.startsWith('/album/private')) {
       this.privatePath = true;
       this.basePath = '/album/private/';
+      this.view = 'private';
 
     } else {
       this.privatePath = false;
       this.basePath = '/album/public/';
+      this.view = 'public';
 
     }
     
@@ -129,18 +115,30 @@ export default {
 
     // create signed url index, as the array numbers need to be in a continuos sequence (i.e. 0, 1, 2, 3)
     var signCounter = 0;
+    const foundPrefixes = [];
+
+    // add home link
+    this.albumLinks.push({ 
+      "prefix": "home", 
+      "url": "/album/" + this.view 
+    });
 
     // find folder prefixes in image list response
     for (let i = 0; i < imgListResp.length; i++) {
       
-      if (imgListResp[i].key.endsWith('/')) {
-        
-        const prefixName = imgListResp[i].key;
+      const prefixKey = imgListResp[i].key;
+      const prefixName = prefixKey.substring(0, prefixKey.lastIndexOf('/'));
+
+      if (!foundPrefixes.includes(prefixName)) {
+
+        foundPrefixes.push(prefixName);
+
         this.albumLinks.push({ 
-          "prefix": prefixName.substring(0, prefixName.length - 1), 
-          "url": this.basePath + prefixName
+          "prefix" : prefixName, 
+          "url" : this.basePath + prefixName + '/'
         });
-        console.log('pushed ' + prefixName);
+
+        console.log('pushed prefix ' + prefixName);
 
       }
     }
