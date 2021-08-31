@@ -1,8 +1,11 @@
 <template>
   <div id = "app">
     <h2>viewing {{this.title}} album</h2>
-    {{this.albumLinks}}
-    <v-btn x-small block @click = "reloadPage" v-if = "privatePath">reload page<br /></v-btn>
+    <div v-for="data in albumLinks" v-bind:key = "data.url">
+      <router-link v-bind:to="data.url" replace >
+        {{ data.prefix }}
+      </router-link>
+    </div>
     <br />
     <masonry-wall :items="imgs" :rtl="false" :column-width="250" :padding="5">
       <template #default="{ item }">
@@ -63,7 +66,8 @@ export default {
       view: view,
       privatePath: false,
       title: 'public',
-      albumLinks: []
+      albumLinks: [{ "prefix": "home", "url": "/album/" + view }],
+      basePath: ''
     }
   },
 
@@ -84,12 +88,15 @@ export default {
 
     // set url path, i.e. /album/private/album2
     const path = this.$route.fullPath;
+    this.path = path;
 
     if (path.startsWith('/album/private')) {
       this.privatePath = true;
+      this.basePath = '/album/private/';
 
     } else {
       this.privatePath = false;
+      this.basePath = '/album/public/';
 
     }
     
@@ -129,7 +136,10 @@ export default {
       if (imgListResp[i].key.endsWith('/')) {
         
         const prefixName = imgListResp[i].key;
-        this.albumLinks.push(prefixName);
+        this.albumLinks.push({ 
+          "prefix": prefixName.substring(0, prefixName.length - 1), 
+          "url": this.basePath + prefixName
+        });
         console.log('pushed ' + prefixName);
 
       }
@@ -180,11 +190,6 @@ export default {
     // hide detail panel method
     handleHide() {
       this.visible = false
-    },
-
-    reloadPage(){
-      console.log('reload')
-      window.location.reload()
     },
 
     // shuffle the order of the imgList array
