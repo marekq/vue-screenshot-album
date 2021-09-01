@@ -1,11 +1,14 @@
 <template>
   <div id = "app">
     <h2>viewing {{this.title}} album</h2>
-    <div v-for="data in albumLinks" v-bind:key = "data.url">
-      <router-link v-bind:to="data.url" replace >
-        {{ data.prefix }}
-      </router-link>
-    </div>
+    <br />
+    <table><tr>
+      <td v-for="data in albumLinks" v-bind:key = "data.url">
+        <router-link v-bind:to="data.url" replace >
+          {{ data.prefix }}
+        </router-link>
+      </td>
+    </tr></table>
     <br />
     <masonry-wall :items="imgs" :rtl="false" :column-width="250" :padding="5">
       <template #default="{ item }">
@@ -126,13 +129,16 @@ export default {
     // find folder prefixes in image list response
     for (let i = 0; i < imgListResp.length; i++) {
       
+      // get the prefix key
       const prefixKey = imgListResp[i].key;
+
+      // get the printable prefix name
       const prefixName = prefixKey.substring(0, prefixKey.lastIndexOf('/'));
 
-      if (!foundPrefixes.includes(prefixName)) {
+      // if prefix is not found in the list, add it
+      if (!foundPrefixes.includes(prefixName) && prefixName != this.$route.params.album) {
 
         foundPrefixes.push(prefixName);
-
         this.albumLinks.push({ 
           "prefix" : prefixName, 
           "url" : this.basePath + prefixName + '/'
@@ -227,4 +233,10 @@ a {
 img {
   max-width: 100%;
 }
+table {
+    white-space: nowrap;
+    width: 100%;
+    table-layout: auto;
+}
+
 </style>
