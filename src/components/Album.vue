@@ -35,7 +35,7 @@ import { Auth, Storage } from 'aws-amplify';
 import MasonryWall from '@yeger/vue-masonry-wall';
 
 export default {
-  name: 'Album',
+  name: 'album-page',
   components: {
     MasonryWall,
     VueEasyLightbox

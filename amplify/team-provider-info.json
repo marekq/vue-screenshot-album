@@ -19,7 +19,7 @@
       "function": {
         "AdminQueries599e86cd": {
           "deploymentBucketName": "amplify-screenalbum-dev-173529-deployment",
-          "s3Key": "amplify-builds/AdminQueries599e86cd-67464e5045574e7a4739-build.zip"
+          "s3Key": "amplify-builds/AdminQueries599e86cd-53696337472b44385271-build.zip"
         }
       }
     }

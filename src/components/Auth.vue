@@ -15,7 +15,7 @@
 
 <script>
   export default {
-    name: 'auth',
+    name: 'auth-page',
     data() {
       return {
         registerFields: [

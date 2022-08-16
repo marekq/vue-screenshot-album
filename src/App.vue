@@ -1,16 +1,16 @@
 <template>
   <div class = 'app'>
     <div v-bind:style = '{textAlign: "center"}' class = 'navbar'>
-      <router-link tag = "p" to = "/">
+      <router-link to = "/">
         <a>Home</a>
       </router-link>
-      <router-link tag = "p" to = "/album/public">
+      <router-link to = "/album/public">
         <a>Public albums</a>
       </router-link>
-      <router-link tag = "p" to = "/album/private" v-if = "signedIn">
+      <router-link to = "/album/private" v-if = "signedIn">
         <a>My albums</a>
       </router-link>
-      <router-link tag = "p" to = "/auth/" v-if = "!signedIn">
+      <router-link to = "/auth/" v-if = "!signedIn">
         <a>Login</a>
       </router-link>
     </div>
@@ -28,6 +28,14 @@ import { Auth, Hub } from 'aws-amplify';
 
 export default {
   name: 'app',
+  metaInfo: {
+    title: 'ColdStart',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'description', content: 'ColdStart' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ]
+  },
   data() {
     return {
       signedIn: false
