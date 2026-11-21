@@ -10,7 +10,7 @@
   "dependencies": {
     "@aws-amplify/ui-components": "^1.9.6",
     "@yeger/vue-masonry-wall": "^3.0.45",
-    "aws-amplify": "^4.3.31",
+    "aws-amplify": "6.0.0",
     "bootstrap": "^5.2.0",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.24.1",
